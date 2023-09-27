@@ -1,75 +1,49 @@
-from tkinter import *
-from tkinter import filedialog
 import tkinter as tk
-from PIL import Image, ImageTk
-# from tkinter.tix import IMAGETEXT
+import customtkinter
+from tkinter import filedialog
+from PIL import Image
+import os
 
-def openImage():
-    filepath=filedialog.askopenfilename(title="Select Dataset",
-                                        filetypes=(("Images (.jpg)","*.jpg"),
-                                        ("Videos (.mp4)","*.mp4")))
-    file = Image.open(filepath)
-    file=ImageTk.PhotoImage(file)
-    imageLabel.configure(image=file,width=250,height=250)
-    imageLabel.image=file
-    # file.close()
+customtkinter.set_appearance_mode("dark")  # Modes: system (default), light, dark
+customtkinter.set_default_color_theme("green")  # Themes: blue (default), dark-blue, green
 
-def openVideo():
-    filepath=filedialog.askopenfilename(title="Select Dataset",
-                                        filetypes=(("Images (.jpg)","*.jpg"),
-                                        ("Videos (.mp4)","*.mp4")))
-    file = Image.open(filepath)
-    file=ImageTk.PhotoImage(file)
-    videoLabel.configure(image=file,width=250,height=250)
-    videoLabel.image=file
-    # file.close()
+def OpenFile():
+    FilePath = filedialog.askopenfilename(filetypes=[("Video Files", "*.mp4 *.avi *.mkv *.mov"), ("Image Files", "*.jpg *.jpeg *.png")])
+    if FilePath:
+        if FilePath.lower().endswith((".jpg", "jpeg", ".png")):
+            ShowImage(FilePath)
 
-def classifyME():
-    filepath=filedialog.askopenfilename(title="Select Dataset",
-                                        filetypes=(("Images (.jpg)","*.jpg"),
-                                        ("Videos (.mp4)","*.mp4")))
-    file = open(filepath, 'r')
-    file.close()
-
-# Window
-window = Tk()
-window.title("Micro-Expression Detection using CNN-LBP")
-window.geometry("700x500+250+180")
-window.resizable(False,False)
-window.configure(bg="#2f4155")
+def ShowImage(ImagePath):
+    image = customtkinter.CTkImage(dark_image=Image.open(os.path.join(ImagePath)),
+                                   size=(200, 200))
+    image_label = customtkinter.CTkLabel(master=app, image=image, text="")
+    image_label.place(relx=0.5, rely=0.3, anchor=tk.CENTER)
 
 
-# First Frame
-frame1 = Frame(window,bd=3,bg="grey", width=340, height=280,relief=GROOVE)
-frame1.place(x=10,y=80)
+def ClassifyME():
+    textbox2.delete("0.0", "200.0")
+    result = "Classification: Happiness"
+    textbox2.insert("0.0", result)
 
-# Label to place image in frame1
-imageLabel = Label(frame1,bg="grey")
-imageLabel.place(x=40,y=10)
+# Create the main window
+app = customtkinter.CTk()
+app.geometry("600x550")
 
-videoLabel = Label(frame1,bg="grey")
-videoLabel.place(x=40,y=10)
+# Create container for Apex Frame
+textbox = customtkinter.CTkTextbox(master=app, width=250, height=250)
+textbox.place(relx=0.5, rely=0.3, anchor=tk.CENTER)
 
-# Second Frame
-frame2 = Frame(window,bd=3,bg="grey", width=340, height=280,relief=GROOVE)
-frame2.place(x=350,y=80)
+# Create textbox for result
+textbox2 = customtkinter.CTkTextbox(master=app, width=300, height=45)
+textbox2.place(relx=0.5, rely=0.8, anchor=tk.CENTER)
 
-# Frame for Open button
-frame3 = Frame(window,bd=3,bg="grey", width=330, height=100,relief=GROOVE)
-frame3.place(x=10,y=370)
+# Create a button to open files
+btn = customtkinter.CTkButton(master=app, text="Input File", command=OpenFile)
+btn.place(relx=0.5, rely=0.6125, anchor=tk.CENTER)
 
-# Open button
-Button(frame3,text="Open Image",width=10,height=2,font="arial 14 bold",command=openImage).place(x=20,y=20)
-Button(frame3,text="Open Video",width=10,height=2,font="arial 14 bold",command=openVideo).place(x=180,y=20)
+# Create a button to classify micro-expression
+btn2 = customtkinter.CTkButton(master=app, text="Classify ME", command=ClassifyME)
+btn2.place(relx=0.5, rely=0.6825, anchor=tk.CENTER)
 
-# Frame for Classify button
-frame4 = Frame(window,bd=3,bg="grey", width=330, height=100,relief=GROOVE)
-frame4.place(x=360,y=370)
-
-# Classify button
-Button(frame4,text="Classify Img",width=10,height=2,font="arial 14 bold",command=classifyME).place(x=20,y=20)
-Button(frame4,text="Classify Vid",width=10,height=2,font="arial 14 bold",command=classifyME).place(x=180,y=20)
-
-window.mainloop()
-
-# comment
+# Run the Tkinter main loop
+app.mainloop()
