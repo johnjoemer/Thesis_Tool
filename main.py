@@ -3,15 +3,20 @@ import customtkinter
 from tkinter import filedialog
 from PIL import Image
 import os
+import time
 import cv2
 import dlib
+from tqdm import tqdm
+from tkinter import ttk
 from moviepy.editor import VideoFileClip
-from ExtractImage import extract_frames
+# from ExtractImage import extract_frames
+
 
 customtkinter.set_appearance_mode("dark")  # Modes: system (default), light, dark
 customtkinter.set_default_color_theme("green")  # Themes: blue (default), dark-blue, green
 
 current_image_label = None
+
 
 def OpenFile():
     FilePath = filedialog.askopenfilename(filetypes=[("Video Files", "*.mp4 *.avi *.mkv *.mov"), ("Image Files", "*.jpg *.jpeg *.png")])
@@ -21,7 +26,43 @@ def OpenFile():
         elif FilePath.lower().endswith((".mp4", ".avi", ".mkv", ".mov")):
             ShowVideo(FilePath)
 
+def extract_frames(videoFile, times, sequencePath):
+    extracting = tk.Tk()
+    extracting.title("Extracting Frames")
+
+    progress_var = tk.DoubleVar()
+    progress_bar = ttk.Progressbar(extracting, variable=progress_var, length=300, mode='determinate')
+    progress_bar.grid(row=0, column=0, padx=10, pady=10)
+
+    if not os.path.exists(sequencePath):
+        os.makedirs(sequencePath)
+
+    clip = VideoFileClip(videoFile)
+    original_filename = os.path.splitext(os.path.basename(videoFile))[0]
+
+    counter = 0
+
+    for i, t in enumerate(times):
+        frame_path = os.path.join(sequencePath, f'{original_filename}_frame{i+1}.jpg')
+        clip.save_frame(frame_path, t)
+    
+        # Increment counter for the next face
+        counter += 1
+
+        progress_value = int(counter / 35 * 100)
+        progress_var.set(progress_value)
+        progress_bar.update_idletasks()
+    
+    extracting.destroy()
+
 def CropFaces(input_folder, output_folder):
+    crop = tk.Tk()
+    crop.title("Cropping Frames")
+
+    progress_var = tk.DoubleVar()
+    progress_bar = ttk.Progressbar(crop, variable=progress_var, length=300, mode='determinate')
+    progress_bar.grid(row=0, column=0, padx=10, pady=10)
+
     # Ensure the output folder exists
     os.makedirs(output_folder, exist_ok=True)
 
@@ -43,7 +84,7 @@ def CropFaces(input_folder, output_folder):
             faces = face_detector(gray_img)
 
             # Initialize a counter for unique face identification
-            counter = 1
+            counter = 0
 
             # Crop and save each detected face
             for i, face in enumerate(faces, start=1):
@@ -73,6 +114,12 @@ def CropFaces(input_folder, output_folder):
                 # Increment counter for the next face
                 counter += 1
 
+                progress_value = int(counter / 35 * 100)
+
+                progress_var.set(progress_value)
+                progress_bar.update_idletasks()
+
+    crop.destroy()
 
 def ShowImage(ImagePath):
     global current_image_label
@@ -99,30 +146,37 @@ def ShowVideo(VideoPath):
     ExtractedPath = os.path.join(os.path.dirname(VideoPath), f'{original_filename}_Extracted')
     os.makedirs(ExtractedPath, exist_ok=True)
 
-
     clip = VideoFileClip(VideoPath)
     times = [i/clip.fps for i in range(int(clip.fps * clip.duration))]
     extract_frames(VideoPath, times, ExtractedPath)
 
     croppedPath = os.path.join(os.path.dirname(VideoPath), f'{original_filename}_Cropped')
-
     CropFaces(ExtractedPath, croppedPath)
 
     # Takes original filename and appends what frame it is to the end
-    # frame_path = os.path.join(ExtractedPath, f'{os.path.splitext(os.path.basename(VideoPath))[0]}_frame1.jpg')
     frame_path = os.path.join(croppedPath, f'{os.path.splitext(os.path.basename(VideoPath))[0]}_frame1_Cropped.jpg')
-    # frame_path = os.path.join(croppedPath, os.path.join(os.path.dirname(croppedPath), f'{original_filename}_frame1_Cropped1.jpg'))
-    # print(frame_path)
     ShowImage(frame_path)
 
 
 def ClassifyME():
-    textbox2.delete("0.0", "200.0")
-    result = "Classification: Happiness"
-    textbox2.insert("0.0", result)
+    classify = tk.Tk()
+    classify.title("Recognizing Micro-Expression")
+
+    classify_progress_var = tk.DoubleVar()
+    classify_progress_bar = ttk.Progressbar(classify, variable=classify_progress_var, length=300, mode='determinate')
+    classify_progress_bar.grid(row=0, column=0, padx=10, pady=10)
+
+    classify.after(1000, lambda: close_windows(classify))
+
+def close_windows(classify_window):
+    classify_window.destroy()
+    textbox2.delete("0.0", "200.00") 
+    result = "Classification: Disgust"
+    textbox2.insert("0.0", result)   
 
 # Create the main window
 app = customtkinter.CTk()
+app.title("A Hybridized CNN-LBP Micro-Expression Recognition")
 app.geometry("600x550")
 
 # Create container for Apex Frame
