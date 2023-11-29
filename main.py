@@ -1,3 +1,11 @@
+# script for apex frame extraction
+# iterate thru the image sequence to spot apex frame
+# train CNN using extracted apex frames
+# train SVM 
+# Use the estimated emotion "others" as "No Micro-Expression" value 
+# Connect the 2 models to the interface
+# Add three buttons for "Process Images" "Spot Apex Frame" "Classify ME"
+
 import tkinter as tk
 import customtkinter
 from tkinter import filedialog
@@ -12,7 +20,13 @@ customtkinter.set_appearance_mode("dark")  # Modes: system (default), light, dar
 customtkinter.set_default_color_theme("green")  # Themes: blue (default), dark-blue, green
 
 current_image_label = None
+imagePath = []
 
+<<<<<<< Updated upstream
+=======
+# Make two buttons | One for Preprocess, One for ME Recognize
+
+>>>>>>> Stashed changes
 def OpenFile():
     FilePath = filedialog.askopenfilename(filetypes=[("Video Files", "*.mp4 *.avi *.mkv *.mov"), ("Image Files", "*.jpg *.jpeg *.png")])
     if FilePath:
@@ -21,6 +35,42 @@ def OpenFile():
         elif FilePath.lower().endswith((".mp4", ".avi", ".mkv", ".mov")):
             ShowVideo(FilePath)
 
+<<<<<<< Updated upstream
+=======
+def extract_frames(videoFile, times, sequencePath):
+    extracting = tk.Tk()
+    extracting.title("Extracting Frames")
+
+    progress_var = tk.DoubleVar()
+    progress_bar = ttk.Progressbar(extracting, variable=progress_var, length=300, mode='determinate')
+    progress_bar.grid(row=0, column=0, padx=10, pady=10)
+
+    if not os.path.exists(sequencePath):
+        os.makedirs(sequencePath)
+
+    clip = VideoFileClip(videoFile)
+    original_filename = os.path.splitext(os.path.basename(videoFile))[0]
+    imagePath = original_filename
+
+    # [img1, apexframe
+    #  img2, notapex]
+
+    counter = 0
+
+    for i, t in enumerate(times):
+        frame_path = os.path.join(sequencePath, f'{original_filename}_frame{i+1}.jpg')
+        clip.save_frame(frame_path, t)
+    
+        # Increment counter for the next face
+        counter += 1
+
+        progress_value = int(counter / 35 * 100)
+        progress_var.set(progress_value)
+        progress_bar.update_idletasks()
+    
+    extracting.destroy()
+
+>>>>>>> Stashed changes
 def CropFaces(input_folder, output_folder):
     # Ensure the output folder exists
     os.makedirs(output_folder, exist_ok=True)
@@ -73,6 +123,15 @@ def CropFaces(input_folder, output_folder):
                 # Increment counter for the next face
                 counter += 1
 
+<<<<<<< Updated upstream
+=======
+                progress_value = int(counter / 35 * 100)
+
+                progress_var.set(progress_value)
+                progress_bar.update_idletasks()
+    # Progress bar destroy
+    crop.destroy()
+>>>>>>> Stashed changes
 
 def ShowImage(ImagePath):
     global current_image_label
