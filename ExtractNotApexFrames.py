@@ -5,7 +5,7 @@ import shutil
 
 # Change csv_path, source_root_folder, output_folder values before running
 
-csv_path = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/Casme2CodingTestApexFrameExtraction.csv'
+csv_path = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/CodingForApexFrameExtraction.csv'
 df = pd.read_csv(csv_path)
 
 # Specify the source folder for images
