@@ -4,6 +4,7 @@ from tkinter import filedialog
 
 from PreProcessing import *
 from LBPSVMClassifier import *
+from CNN_ApexFrame import *
 
 customtkinter.set_appearance_mode("dark")  # Modes: system (default), light, dark
 customtkinter.set_default_color_theme("green")  # Themes: blue (default), dark-blue, green
@@ -31,10 +32,13 @@ def ModelRunner():
         print(f"Selected Directory: {DirectoryPath}")
 
         # CNN Model
-        
-        # imagePath = cnnModel(DirectoryPath)
-        imagePath = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/Extracted_ApexFrames/EP13_06_frame109.jpg'
+        imagePath = SpotME(DirectoryPath)
+        # imagePath = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/Extracted_ApexFrames/EP13_06_frame109.jpg'
+
+        # Load SVM Model
         svm_model_path = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/SVM_Classifier_Model/SVM_Model_ApexFrame_90Features_MinusLiveTesting.joblib'
+
+        # Initialize Progress Bar
         progress_var = tk.DoubleVar()
 
         # Stores the classified ME to local variable
