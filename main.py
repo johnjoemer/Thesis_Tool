@@ -1,15 +1,6 @@
-# script for apex frame extraction >
-# iterate thru the image sequence to spot apex frame >
-# train CNN using extracted apex frames >
-# train SVM >
-# Use the estimated emotion "others" as "No Micro-Expression" value >
-# Connect the 2 models to the interface
-# Add three buttons for "Process Images" "Spot Apex Frame" "Classify ME"
-
 import tkinter as tk
 import customtkinter
 from tkinter import filedialog
-from ExtractImage import extract_frames
 
 from PreProcessing import *
 from LBPSVMClassifier import *
@@ -42,8 +33,8 @@ def ModelRunner():
         # CNN Model
         
         # imagePath = cnnModel(DirectoryPath)
-        imagePath = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/Extracted_ApexFrames/EP06_07_frame225.jpg'
-        svm_model_path = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/SVM_Classifier_Model/SVM_Model_ApexFrameV6_37percent.joblib'
+        imagePath = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/Extracted_ApexFrames/EP13_06_frame109.jpg'
+        svm_model_path = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/SVM_Classifier_Model/SVM_Model_ApexFrame_90Features_MinusLiveTesting.joblib'
         progress_var = tk.DoubleVar()
 
         # Stores the classified ME to local variable
