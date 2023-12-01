@@ -25,6 +25,9 @@ for index, row in df.iterrows():
     # Construct the actual image path to be used
     image_path = f'/Users/jj/Documents/COLLEGE_DOCS/CASME2/Extracted_ApexFrames/{filename}_frame{apex_frame}.jpg'
 
+
+
+def iterateApex(sourcepath):
     # Check if the image file exists
     if os.path.exists(image_path):
         # Read the image
@@ -36,11 +39,11 @@ for index, row in df.iterrows():
         lbp_features_flat = lbp_features.flatten()
 
         # Update the "Computed LBP" column in the DataFrame
-        df.at[index, 'Computed LBP'] = ','.join(map(str, lbp_features_flat[:90])) # Only takes the first 10 elements of the array | too long, causes an error
+        df.at[index, 'Computed LBP'] = ','.join(map(str, lbp_features_flat[:120])) # Only takes the first 120 elements of the array | too long, causes an error
 
     else:
         print(f"Image not found: {image_path}")
 
 # Save the updated DataFrame to a new CSV file
-output_csv_path = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/Coding with Computed LBP Features V6.csv'
+output_csv_path = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/Coding with Computed LBP Features 120features.csv'
 df.to_csv(output_csv_path, index=False)
