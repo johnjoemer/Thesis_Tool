@@ -5,14 +5,14 @@ import shutil
 
 # Change csv_path, source_root_folder, output_folder values before running
 
-csv_path = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/CodingForSVMTrainingV3.csv'
+csv_path = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/CodingForSVMTrainingV4_DoesntIncludeOthersEmotion.csv'
 df = pd.read_csv(csv_path)
 
 # Specify the source folder for images
-source_root_folder = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/Cropped/'
+source_root_folder = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/Cropped'
 
 # Specify the output folder for copied images
-output_folder = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/Extracted_ApexFrames/'
+output_folder = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/Extracted_ApexFrames_LBP_NoOthersEmotion'
 
 # Create the output folder if it does not exist
 os.makedirs(output_folder, exist_ok=True)

@@ -19,11 +19,18 @@ def PreprocessRunner():
             current_image_label.place(relx=0.5, rely=0.3, anchor=tk.CENTER)
 
         elif FilePath.lower().endswith((".mp4", ".avi", ".mkv", ".mov")):
-            ImagePath = ShowVideo(FilePath)
-            SelectedImage = ShowImage(ImagePath)
+            Duration = getDuration(FilePath)
+            if Duration <= 5:
+                ImagePath = ShowVideo(FilePath)
+                SelectedImage = ShowImage(ImagePath)
 
-            current_image_label = customtkinter.CTkLabel(master=app, image=SelectedImage, text="")
-            current_image_label.place(relx=0.5, rely=0.3, anchor=tk.CENTER)
+                current_image_label = customtkinter.CTkLabel(master=app, image=SelectedImage, text="")
+                current_image_label.place(relx=0.5, rely=0.3, anchor=tk.CENTER)
+            else:
+                textbox2.delete("0.0", "end")
+                textboxOutput = "Video file too long. Please choose another file"
+                textbox2.insert("0.0", f"{textboxOutput}")
+                print("Video file too long. Please choose another file")
 
 
 def ModelRunner():
@@ -31,23 +38,34 @@ def ModelRunner():
         DirectoryPath = filedialog.askdirectory()
         print(f"Selected Directory: {DirectoryPath}")
 
-        # CNN Model
-        imagePath = SpotME(DirectoryPath)
-        # imagePath = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/Extracted_ApexFrames/EP13_06_frame109.jpg'
-
-        # Load SVM Model
-        svm_model_path = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/SVM_Classifier_Model/SVM_Model_ApexFrame_90Features_MinusLiveTesting.joblib'
-
         # Initialize Progress Bar
         progress_var = tk.DoubleVar()
 
-        # Stores the classified ME to local variable
-        predictedME = classifyME(imagePath, svm_model_path, progress_var)
+        # CNN Model
+        imagePath = SpotME(DirectoryPath, progress_var)
 
-        # Outputs to textbox2 and console
-        textbox2.delete("0.0", "200.00")
-        textbox2.insert("0.0", predictedME)
-        print(f"Micro-Expression Present is: {predictedME}")
+        # Load SVM Model
+        svm_model_path = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/SVM_Classifier_Model/SVM_Not_Including_Others_Emotion_90Features.joblib'
+
+        if imagePath is not None:
+            # Stores the classified ME to local variable
+            predictedME = classifyME(imagePath, svm_model_path, progress_var)
+
+            SelectedImage = ShowImage(imagePath)
+
+            current_image_label = customtkinter.CTkLabel(master=app, image=SelectedImage, text="")
+            current_image_label.place(relx=0.5, rely=0.3, anchor=tk.CENTER)
+
+            # Outputs to textbox2 and console
+            textbox2.delete("0.0", "end")
+            textboxOutput = predictedME[0]
+            textbox2.insert("0.0", f"Micro-Expression Present is: {textboxOutput}")
+            print(f"Micro-Expression Present is: {textboxOutput}")
+        else:
+            textbox2.delete("0.0", "end")
+            textboxOutput = "Error Finding Apex Frame at Chosen Directory"
+            textbox2.insert("0.0", f"{textboxOutput}")
+            print("Error Finding Apex Frame at Chosen Directory")
 
     except tk.TclError:
         print("Invalid Directory")

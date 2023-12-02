@@ -10,11 +10,11 @@ def compute_lbp(image):
     lbp = feature.local_binary_pattern(gray, P=8, R=1, method="uniform")
     return lbp
 
-csv_path = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/Coding with Computed LBP Features 90 Features First Run'
+csv_path = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/CodingForSVMTrainingV4_DoesntIncludeOthersEmotion.csv'
 df = pd.read_csv(csv_path)
 
 # Stores the computed LBP features
-df['Computed LBP 2nd Run'] = ""
+df['Computed LBP'] = ""
 
 # Iterates thru each row in the CSV
 for index, row in df.iterrows():
@@ -23,7 +23,7 @@ for index, row in df.iterrows():
     apex_frame = row['ApexFrame']
 
     # Construct the actual image path to be used
-    image_path = f'/Users/jj/Documents/COLLEGE_DOCS/CASME2/Extracted_ApexFrames/{filename}_frame{apex_frame}.jpg'
+    image_path = f'/Users/jj/Documents/COLLEGE_DOCS/CASME2/Extracted_ApexFrames_LBP_NoOthersEmotion/{filename}_frame{apex_frame}.jpg'
 
     # Check if the image file exists
     if os.path.exists(image_path):
@@ -36,11 +36,11 @@ for index, row in df.iterrows():
         lbp_features_flat = lbp_features.flatten()
 
         # Update the "Computed LBP" column in the DataFrame
-        df.at[index, 'Computed LBP 2nd Run'] = ','.join(map(str, lbp_features_flat[:90])) # Only takes the first 90 features
+        df.at[index, 'Computed LBP'] = ','.join(map(str, lbp_features_flat[:90])) # Only takes the first 90 features
 
     else:
         print(f"Image not found: {image_path}")
 
 # Save the updated DataFrame to a new CSV file
-output_csv_path = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/Coding with Computed LBP Features 90 Features Second Run'
+output_csv_path = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/Computed_LBP_Features_Not_Including_Others_Emotion'
 df.to_csv(output_csv_path, index=False)
