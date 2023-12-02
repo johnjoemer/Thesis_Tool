@@ -39,6 +39,12 @@ def classifyME(imagePath, svmModelPath, progress_var):
     trained_SVM_Model = joblib.load(svmModelPath)
 
     prediction = trained_SVM_Model.predict(lbpfeatures)
+
+    if prediction == "others":
+        classifierValue = "No Micro-Expression Found"
+
+    else:
+        classifierValue = prediction
     
     # Update the progress bar
     progress_var.set(counter)
@@ -46,4 +52,4 @@ def classifyME(imagePath, svmModelPath, progress_var):
 
     progress.destroy()
     app.destroy()
-    return prediction
+    return classifierValue

@@ -9,6 +9,12 @@ from moviepy.editor import VideoFileClip
 from ExtractImage import extract_frames
 import cv2
 
+def getDuration(video_path):
+    clip = VideoFileClip(video_path)
+    duration = clip.duration
+    clip.close()
+    return duration
+
 def extract_frames(videoFile, times, sequencePath, progress_var):
     if not os.path.exists(sequencePath):
         os.makedirs(sequencePath)
@@ -93,7 +99,7 @@ def CropFaces(input_folder, output_folder, progress_var):
                 x, y, w, h = face.left(), face.top(), face.width(), face.height()
 
                 # Adjust the cropping region to include some margin around the face
-                margin = 5
+                margin = 1
                 x -= margin
                 y -= margin
                 w += 2 * margin
