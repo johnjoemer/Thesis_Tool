@@ -32,24 +32,31 @@ def classifyME(imagePath, svmModelPath, progress_var):
 
     if len(lbpfeatures) != 90:
         print(f"Error: Expected 90 features, but got {len(lbpfeatures)} features.")
-        return None
+        return None, None
 
     lbpfeatures = np.array([lbpfeatures])
 
     trained_SVM_Model = joblib.load(svmModelPath)
 
-    prediction = trained_SVM_Model.predict(lbpfeatures)
+    # Use predict_proba instead of predict
+    probabilities = trained_SVM_Model.predict_proba(lbpfeatures)
 
-    if prediction == "others":
-        classifierValue = "No Micro-Expression Found"
+    # Assuming your SVM model has classes like 'happy', 'sad', etc.
+    class_labels = trained_SVM_Model.classes_
 
-    else:
-        classifierValue = prediction
-    
+    # Map class labels to probabilities
+    probabilities_dict = {class_labels[i]: probabilities[0][i] for i in range(len(class_labels))}
+
+    # Sort the probabilites by descending order
+    sorted_probabilities = dict(sorted(probabilities_dict.items(), key=lambda item: item[1], reverse=True))
+
+    # Get the predicted ME
+    predicted_class = trained_SVM_Model.predict(lbpfeatures)[0]
+
     # Update the progress bar
     progress_var.set(counter)
     app.update_idletasks()
-
     progress.destroy()
     app.destroy()
-    return classifierValue
+
+    return predicted_class, sorted_probabilities

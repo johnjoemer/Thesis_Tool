@@ -4,7 +4,7 @@ import pandas as pd
 import shutil
 
 # Change csv_path, source_root_folder, output_folder values before running
-csv_path = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/CodingForSVMTrainingV4_DoesntIncludeOthersEmotion.csv'
+csv_path = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/CodingForSVMTrainingV4_IncludesOthersEmotion.csv'
 df = pd.read_csv(csv_path)
 
 # Specify the source folder for images
