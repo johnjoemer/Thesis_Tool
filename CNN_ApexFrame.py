@@ -6,8 +6,6 @@ import os
 import numpy as np
 
 def SpotME(folder_path, progress_var):
-    # folder_path = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/CASME2_compressed/sub04/EP13_06f_Cropped'
-
     total_frames = 35
     counter = 0
 
@@ -34,19 +32,20 @@ def SpotME(folder_path, progress_var):
             img_array = np.expand_dims(img_array, axis=0)
             img_array /= 255.
             label_pred = loaded_model.predict(img_array.reshape(1, 224, 224, 3))
+            print(file_path)
             print(label_pred)
             label_pred = label_pred > 0.5
 
-            
-
             if (label_pred == 0):
-                print("Apex Frame Spotted")
-
-                # # Update the progress bar
+                print("Apex Frame Spotted\n")
+                print(f"Apex Frame Path: {file_path}\n")
+                
+                # Update the progress bar
                 progress.destroy()
                 app.destroy()
                 return file_path
             else:
+                print(file_path)
                 pred = 'No Apex Frame spotted'
                 print(pred)
 
