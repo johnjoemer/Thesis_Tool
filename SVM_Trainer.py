@@ -8,7 +8,7 @@ from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
 import joblib
 
-data = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/Computed_LBP_Features_Not_Including_Others_Emotion'
+data = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/10 Fold Cross Validation CSV/Iteration_1_Training_ComputedLBP.csv'
 df = pd.read_csv(data)
 
 print(type(df['Computed LBP'][0]))
@@ -34,8 +34,8 @@ svm_classifier = SVC(probability=True)
 
 # Training the Classifier
 svm_classifier.fit(X_train, y_train)
-joblib.dump(svm_classifier, '/Users/jj/Documents/COLLEGE_DOCS/CASME2/SVM_Classifier_Model/SVM_Model_withProba')
-trained_SVM_Model = joblib.load('/Users/jj/Documents/COLLEGE_DOCS/CASME2/SVM_Classifier_Model/SVM_Model_withProba')
+joblib.dump(svm_classifier, '/Users/jj/Documents/COLLEGE_DOCS/CASME2/SVM_Model_10foldcross/SVM_Iteration_1')
+trained_SVM_Model = joblib.load('/Users/jj/Documents/COLLEGE_DOCS/CASME2/SVM_Model_10foldcross/SVM_Iteration_1')
 
 # Test prediction using Test sample 
 predictions = trained_SVM_Model.predict(X_test)

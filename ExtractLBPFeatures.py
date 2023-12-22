@@ -10,7 +10,7 @@ def compute_lbp(image):
     lbp = feature.local_binary_pattern(gray, P=8, R=1, method="uniform")
     return lbp
 
-csv_path = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/CodingForSVMTrainingV4_DoesntIncludeOthersEmotion.csv'
+csv_path = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/10 Fold Cross Validation CSV/Iteration_1_Training.csv'
 df = pd.read_csv(csv_path)
 
 # Stores the computed LBP features
@@ -23,7 +23,8 @@ for index, row in df.iterrows():
     apex_frame = row['ApexFrame']
 
     # Construct the actual image path to be used
-    image_path = f'/Users/jj/Documents/COLLEGE_DOCS/CASME2/Extracted_ApexFrames_LBP_NoOthersEmotion/{filename}_frame{apex_frame}.jpg'
+    # image_path = f'/Users/jj/Documents/COLLEGE_DOCS/CASME2/Extracted_ApexFrames_LBP_NoOthersEmotion/{filename}_frame{apex_frame}.jpg'
+    image_path = f'/Users/jj/Documents/COLLEGE_DOCS/CASME2/Extracted_ApexFrames_Iteration_1/{filename}_frame{apex_frame}.jpg'
 
     # Check if the image file exists
     if os.path.exists(image_path):
@@ -42,5 +43,5 @@ for index, row in df.iterrows():
         print(f"Image not found: {image_path}")
 
 # Save the updated DataFrame to a new CSV file
-output_csv_path = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/Computed_LBP_Features_Not_Including_Others_Emotion'
+output_csv_path = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/10 Fold Cross Validation CSV/Iteration_1_Training_ComputedLBP.csv'
 df.to_csv(output_csv_path, index=False)

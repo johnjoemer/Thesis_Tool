@@ -38,7 +38,7 @@ def load_and_preprocess_casme2_data(dataset_path, image_size):
 
 # Example usage:
 # dataset_path = r'C:\Users\Obey\OneDrive - Polytechnic University of the Philippines\Desktop\Thesis Tool\Dataset 5'
-dataset_path = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/Dataset_5'
+dataset_path = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/Iteration_1'
 image_size = 224  # Adjust the image size as needed
 
 # Load and preprocess CASME2 data
@@ -74,5 +74,13 @@ model.add(Dense(1, activation='sigmoid'))
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 model.fit(X_train, Y_train, epochs=10, batch_size=64)
+
+from keras.models import load_model
+
+# Save the model
+model.save('/Users/jj/Documents/COLLEGE_DOCS/CASME2/CNN_Model_10foldcross/CNN_Iteration_1.keras')
+
+# Load the model
+loaded_model = load_model('/Users/jj/Documents/COLLEGE_DOCS/CASME2/CNN_Model_10foldcross/CNN_Iteration_1.keras')
 
 model.evaluate(X_test, Y_test)
