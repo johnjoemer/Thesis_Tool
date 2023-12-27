@@ -23,7 +23,7 @@ def SpotME(folder_path, progress_var):
     progress.place(relx=0.5, rely=0.8, anchor=tk.CENTER)
     progress["maximum"] = total_frames
 
-    loaded_model = load_model('/Users/jj/Documents/GitHub/Thesis_Tool/CNN_Including_OthersEmotion.keras')
+    loaded_model = load_model('/Users/jj/Documents/COLLEGE_DOCS/CASME2/CNN_Model_10foldcross/CNN_Iteration_1.keras')
     for root, dirs, files in os.walk(folder_path):
         for file in files:
             file_path = os.path.join(root, file)
