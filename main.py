@@ -60,7 +60,7 @@ def ModelRunner():
         imagePath = SpotME(DirectoryPath, progress_var)
 
         # Load SVM Model
-        svm_model_path = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/SVM_Model_10foldcross/SVM_Iteration_1'
+        svm_model_path = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/Iteration_5/SVM_Model_Iteration_5/SVM_Model_Iteration_5'
 
         if imagePath is not None:
             # Stores the classified ME and probability of other classes to local variable

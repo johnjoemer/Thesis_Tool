@@ -8,7 +8,7 @@ from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
 import joblib
 
-data = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/Computed_LBP_Features_Not_Including_Others_Emotion'
+data = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/Iteration_6/Iteration_6_CSV/Iteration_6_Computed_LBP'
 df = pd.read_csv(data)
 
 print(type(df['Computed LBP'][0]))
@@ -34,8 +34,8 @@ svm_classifier = SVC(probability=True)
 
 # Training the Classifier
 svm_classifier.fit(X_train, y_train)
-joblib.dump(svm_classifier, '/Users/jj/Documents/COLLEGE_DOCS/CASME2/SVM_Classifier_Model/SVM_Model_withProba')
-trained_SVM_Model = joblib.load('/Users/jj/Documents/COLLEGE_DOCS/CASME2/SVM_Classifier_Model/SVM_Model_withProba')
+joblib.dump(svm_classifier, '/Users/jj/Documents/COLLEGE_DOCS/CASME2/Iteration_6/SVM_Model_Iteration_6/SVM_Model_Iteration_6')
+trained_SVM_Model = joblib.load('/Users/jj/Documents/COLLEGE_DOCS/CASME2/Iteration_6/SVM_Model_Iteration_6/SVM_Model_Iteration_6')
 
 # Test prediction using Test sample 
 predictions = trained_SVM_Model.predict(X_test)
@@ -45,3 +45,5 @@ print(predictions)
 
 accuracy = accuracy_score(y_test, predictions)
 print (f"Accuracy: {accuracy * 100: .2f}%")
+
+print("Done Training SVM")

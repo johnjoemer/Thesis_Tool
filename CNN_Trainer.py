@@ -9,6 +9,7 @@ from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D, Dense, Flatten
 from keras.preprocessing import image
 from sklearn.model_selection import train_test_split
+from keras.models import load_model
 
 # Function to load and preprocess CASME2 data
 def load_and_preprocess_casme2_data(dataset_path, image_size):
@@ -38,7 +39,7 @@ def load_and_preprocess_casme2_data(dataset_path, image_size):
 
 # Example usage:
 # dataset_path = r'C:\Users\Obey\OneDrive - Polytechnic University of the Philippines\Desktop\Thesis Tool\Dataset 5'
-dataset_path = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/Dataset_5'
+dataset_path = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/Iteration_5/CNN_Dataset_Iteration_5'
 image_size = 224  # Adjust the image size as needed
 
 # Load and preprocess CASME2 data
@@ -76,3 +77,11 @@ model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy']
 model.fit(X_train, Y_train, epochs=10, batch_size=64)
 
 model.evaluate(X_test, Y_test)
+
+# Save the model
+model.save('/Users/jj/Documents/COLLEGE_DOCS/CASME2/Iteration_5/CNN_Model_Iteration_5/CNN_Model_Iteration_5.keras')
+
+# # Load the model
+# loaded_model = load_model('/Users/jj/Documents/GitHub/Thesis_Tool/CNN_Including_OthersEmotion.keras')
+
+print("Done Training CNN")
