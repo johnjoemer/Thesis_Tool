@@ -36,10 +36,8 @@ def load_and_preprocess_casme2_data(dataset_path, image_size):
 
     return images, labels
 
-# Example usage:
-# dataset_path = r'C:\Users\Obey\OneDrive - Polytechnic University of the Philippines\Desktop\Thesis Tool\Dataset 5'
 dataset_path = '/Users/jj/Documents/COLLEGE_DOCS/CASME2/Dataset_5'
-image_size = 224  # Adjust the image size as needed
+image_size = 224  # Adjust the image size
 
 # Load and preprocess CASME2 data
 images, labels = load_and_preprocess_casme2_data(dataset_path, image_size)
