@@ -39,7 +39,6 @@ trained_SVM_Model = joblib.load('/Users/jj/Documents/COLLEGE_DOCS/CASME2/SVM_Cla
 
 # Test prediction using Test sample 
 predictions = trained_SVM_Model.predict(X_test)
-# predictions = svm_classifier.predict(X_test)
 
 print(predictions)
 

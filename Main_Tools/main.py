@@ -6,8 +6,8 @@ from PreProcessing import *
 from LBPSVMClassifier import *
 from CNN_ApexFrame import *
 
-customtkinter.set_appearance_mode("dark")  # Modes: system (default), light, dark
-customtkinter.set_default_color_theme("green")  # Themes: blue (default), dark-blue, green
+customtkinter.set_appearance_mode("dark") 
+customtkinter.set_default_color_theme("green")  
 
 def PreprocessRunner():
     FilePath = filedialog.askopenfilename(filetypes=[("Video Files", "*.mp4 *.avi *.mkv *.mov"), ("Image Files", "*.jpg *.jpeg *.png")])
@@ -17,10 +17,6 @@ def PreprocessRunner():
             textboxOutput = "Preprocessing Done"
             textbox2.insert("0.0", f"{textboxOutput}")
             print("Preprocessing Done.")
-            # SelectedImage = ShowImage(FilePath)
-
-            # current_image_label = customtkinter.CTkLabel(master=app, image=SelectedImage, text="")
-            # current_image_label.place(relx=0.5, rely=0.3, anchor=tk.CENTER)
 
         elif FilePath.lower().endswith((".mp4", ".avi", ".mkv", ".mov")):
             Duration = getDuration(FilePath)
@@ -30,11 +26,7 @@ def PreprocessRunner():
                 textboxOutput = "Preprocessing Done"
                 textbox2.insert("0.0", f"{textboxOutput}")
                 print("Preprocessing Done.")
-                # ImagePath = ShowVideo(FilePath)
-                # SelectedImage = ShowImage(ImagePath)
-
-                # current_image_label = customtkinter.CTkLabel(master=app, image=SelectedImage, text="")
-                # current_image_label.place(relx=0.5, rely=0.3, anchor=tk.CENTER)
+      
             else:
                 textbox2.delete("0.0", "end")
                 textboxOutput = "Video file too long. Please choose another file"
